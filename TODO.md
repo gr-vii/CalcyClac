@@ -1,0 +1,3 @@
+- add typescript support
+- integrate a lightweight UI framework that makes use of unused html tags
+- passing sass/scss variables down to child components
