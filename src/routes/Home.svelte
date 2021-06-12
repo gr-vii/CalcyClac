@@ -1,52 +1,62 @@
 <script>
-	let vals = [0, ""]
-	let val_i = 0
+	import {derivative, evaluate} from "mathjs"
+	
+	let expr = ""
 	let res = 0
-	let op = ""
 
-	function insert(n){
-		let active = vals[val_i].toString()
-		active += n
-		vals[val_i] = Number(active)
-	}
-
-	function operator(o) {
-		op = o
-		val_i++
+	function insert(seg) {
+		expr += seg
 	}
 
 	function calc() {
-		switch (op) {
-			case "+": res = vals[0] + vals[1]; break;
-			case "-": res = vals[0] - vals[1]; break;
-			case "*": res = vals[0] * vals[1]; break;
-			case "/": res = vals[0] / vals[1]; break;
-			case "%": res = vals[0] % vals[1]; break;
-		}
+		res = evaluate(expr)
+	}
+
+	function deriv() {
+		res = derivative(expr, 'x').toString()
+	}
+
+	function all_clear() {
+		expr = ""
+		res = 0
+	}
+
+	function del() {
+		expr = expr.substring(0, expr.length-1)
 	}
 
 	let buttons = [
 		{ val: "1", func: insert },
 		{ val: "2", func: insert },
 		{ val: "3", func: insert },
-		{ val: "+", func: operator },
+		{ val: "+", func: insert },
 		{ val: "4", func: insert },
 		{ val: "5", func: insert },
 		{ val: "6", func: insert },
-		{ val: "-", func: operator },
+		{ val: "-", func: insert },
 		{ val: "7", func: insert },
 		{ val: "8", func: insert },
 		{ val: "9", func: insert },
-		{ val: "*", func: operator },
+		{ val: "^", func: insert },
+		{ val: "*", func: insert },
+		{ val: "/", func: insert },
 		{ val: "0", func: insert },
-		{ val: "/", func: operator },
-		{ val: "%", func: operator },
 		{ val: "=", func: calc },
+		{ val: "DER", func: deriv },
+		{ val: "x", func: insert },
+		{ val: "%", func: insert },
+		{ val: "sin", func: insert },
+		{ val: "cos", func: insert },
+		{ val: "tan", func: insert },
+		{ val: "DEL", func: del },
+		{ val: "AC", func: all_clear },
+		{ val: "(", func: insert },
+		{ val: ")", func: insert },
 	]
 </script>
 
 <div class ="calc">
-	<h2>{vals[0]}{op}{vals[1]}</h2> 
+<h2>{expr == "" ? ":D" : expr}</h2>
 	<h1>{res}</h1>
 
 	<div class="container">
