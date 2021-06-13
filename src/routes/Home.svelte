@@ -66,7 +66,7 @@
 	</div>
 </div>
 
-<style>
+<style lang="scss">
 	* {
 		font-family: monospace;
 		font-weight: 400;
@@ -94,8 +94,20 @@
 		padding: 20px; 
 		font-size: 34px;
 		background: transparent;
+		color: white;
 		border: none;
+		border-radius: 70px;
+
+	&:hover {
+		background: rgba(255, 255, 255, 0.5);
 	}
+
+	&:active {
+		background: rgba(255, 255, 255, 0.75);
+		
+	}
+
+}
 
 	h1, h2 {
 		color: white;
