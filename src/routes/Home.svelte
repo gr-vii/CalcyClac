@@ -1,79 +1,97 @@
 <script>
-	import {derivative, evaluate} from "mathjs"
+	import {all, derivative, evaluate} from "mathjs"
 	
-	let is_expanded = true
+	let is_expanded = false
 	let expr = ""
 	let res = 0
-	let cols = 5
-	let rows = 6
 
-	function insert(seg) {
-		expr += seg
-	}
+	function insert(seg) { expr += seg }
 
-	function calc() {
-		res = evaluate(expr)
-	}
+	function calc() { res = evaluate(expr) }
 
-	function deriv() {
-		res = derivative(expr, 'x').toString()
-	}
+	function deriv() { res = derivative(expr, 'x').toString() }
 
-	function all_clear() {
-		expr = ""
-		res = 0
-	}
+	function all_clear() { expr = ""; res = 0 }
 
-	function del() {
-		expr = expr.substring(0, expr.length-1)
-	}
+	function del() { expr = expr.substring(0, expr.length-1) }
 
 	function toggle_expanded() {
 		is_expanded = !is_expanded
-		cols = 5
-		rows = 5
+		selected_layout = is_expanded ? layouts.expanded : layouts.normal
 	}
 
-	/* { val: String", func: Function, w Number, h Number } */
-	let buttons = [
-		{ val: "1",		func: insert	},
-		{ val: "2",		func: insert	},
-		{ val: "3",		func: insert	},
-		{ val: "+",		func: insert	},
-		{ val: "-",		func: insert	},
+	class Btn {
+		constructor(val, func, advanced, w, h) {
+			this.val = val
+			this.func = func
+			this.w = w ?? 1
+			this.h = h ?? 1
+			this.advanced = advanced ?? false
+		}
+	}
 
-		{ val: "4",		func: insert	},
-		{ val: "5",		func: insert	},
-		{ val: "6",		func: insert	},
-		{ val: "^",		func: insert	},
-		{ val: "*",		func: insert	},
+	let b		= new Btn("",		() => {})
+	let b_1		= new Btn("1",		insert)
+	let b_2		= new Btn("2",		insert)
+	let b_3		= new Btn("3",		insert)
+	let b_4		= new Btn("4",		insert)
+	let b_plus	= new Btn("+",		insert)
+	let b_sub	= new Btn("-",		insert)
+	let b_5		= new Btn("5",		insert)
+	let b_6		= new Btn("6",		insert)
+	let b_div	= new Btn("/",		insert)
+	let b_7		= new Btn("7",		insert)
+	let b_8		= new Btn("8",		insert)
+	let b_9		= new Btn("9",		insert)
+	let b_mul	= new Btn("*",		insert)
+	let b_dot	= new Btn(".",		insert)
+	let b_0		= new Btn("0",		insert)
+	let b_ac	= new Btn("AC",		all_clear,			null, 2)
+	let b_del	= new Btn("DEL",	del,				null, 1)
+	let b_expand= new Btn("EXPAND", toggle_expanded,	null, 4)
+	let b_eq	= new Btn("=",		calc,				null, 2)
+	let b_pow	= new Btn("^",		insert,	true)
+	let b_mod	= new Btn("%",		insert,	true)
+	let b_sin	= new Btn("sin",	insert,	true)
+	let b_cos	= new Btn("cos",	insert,	true)
+	let b_tan	= new Btn("tan",	insert,	true)
+	let b_lb	= new Btn("(",		insert,	true)
+	let b_rb	= new Btn(")",		insert,	true)
+	let b_lm	= new Btn("[",		insert,	true)
+	let b_rm	= new Btn("]",		insert,	true)
+	let b_abs	= new Btn("abs",	insert,	true)
+	let b_sqrt	= new Btn("sqrt",	insert,	true)
+	let b_log	= new Btn("log",	insert,	true)
+	let b_x		= new Btn("x",		insert,	true)
+	let b_i		= new Btn("i",		insert,	true)
+	let b_der	= new Btn("DER",	deriv,	true)
 
-		{ val: "7",		func: insert	},
-		{ val: "8",		func: insert	},
-		{ val: "9",		func: insert	},
-		{ val: "/",		func: insert	},
-		{ val: "%",		func: insert	},
-
-		{ val: "=",		func: calc,		w: 2},
-		{ val: "0",		func: insert	},
-		{ val: ".",		func: insert	},
-		{ val: "DEL",	func: del		},
-		{ val: "AC",	func: all_clear },
-
-		{ val: "sin",	func: insert,	advanced: true},
-		{ val: "cos",	func: insert,	advanced: true},
-		{ val: "tan",	func: insert,	advanced: true},
-		{ val: "(",		func: insert,	advanced: true},
-		{ val: ")",		func: insert,	advanced: true},
-
-		{ val: "abs",	func: insert,	advanced: true},
-		{ val: "sqrt",	func: insert,	advanced: true},
-		{ val: "log",	func: insert,	advanced: true},
-		{ val: "x",		func: insert,	advanced: true},
-		{ val: "DER",	func: deriv	,	advanced: true},
-
-		{ val: "EXP",	func: toggle_expanded },
-	]
+	let layouts = {
+		normal: {
+			sizes: {cols: 4, rows: 6},
+			grid: [
+			b_ac,	b_del,	b_plus,
+			b_1,	b_2,	b_3,	b_sub,
+			b_4,	b_5,	b_6,	b_mul,
+			b_7,	b_8,	b_9,	b_div,
+			b_dot,	b_0,	b_eq,
+			b_expand,
+			]
+		},
+		expanded: {
+			sizes: {cols: 5, rows: 7},
+			grid: [
+			b_ac,	b_del,	b_plus,	b_pow,
+			b_1,	b_2,	b_3,	b_sub,		b_mod,
+			b_4,	b_5,	b_6,	b_mul,		b_x,
+			b_7,	b_8,	b_9,	b_div,		b_i,
+			b_dot,	b_0,	b_eq,
+			b_expand,
+			]
+		}
+	}
+	
+	let selected_layout = layouts.normal
 </script>
 
 <div class="container">
@@ -84,19 +102,15 @@
 		<div
 			class="buttons"
 			style="
-			grid-template-columns: repeat({cols}, 1fr);
-			grid-template-rows: repeat({rows}, 1fr);
+			grid-template-columns: repeat({selected_layout.sizes.cols}, 1fr);
+			grid-template-rows: repeat({selected_layout.sizes.rows}, 1fr);
 			"
 		>
-			{#each buttons as btn}
-				<button
-				on:click={() => btn.func(btn.val)}
-				style="
-				grid-column: span {btn.w ? btn.w : 1};
-				grid-row: span {btn.h ? btn.h : 1};
-				display: { btn.advanced && !is_expanded ? "none" : "grid" };
-				"
-				>{btn.val}</button>
+			{#each selected_layout.grid as btn}
+					<button
+					on:click={() => btn.func(btn.val)}
+					style="grid-column: span {btn.w ? btn.w : 1}; grid-row: span {btn.h ? btn.h : 1};"
+					>{btn.val}</button>
 			{/each}
 		</div>
 	</div>
