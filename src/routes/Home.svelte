@@ -65,6 +65,9 @@
 	let b_x		= new Btn("x",		insert,	true)
 	let b_i		= new Btn("i",		insert,	true)
 	let b_der	= new Btn("DER",	deriv,	true)
+	let b_conj  = new Btn("conj",  insert,  true)
+	let b_fac   = new Btn("!",  insert,  true)
+	let b_pi 	= new Btn("pi",  insert,  true)
 
 	let layouts = {
 		normal: {
@@ -81,11 +84,14 @@
 		expanded: {
 			sizes: {cols: 5, rows: 7},
 			grid: [
-			b_ac,	b_del,	b_plus,	b_pow,
+			b_ac,	        b_del,	b_plus,	    b_pow,
 			b_1,	b_2,	b_3,	b_sub,		b_mod,
 			b_4,	b_5,	b_6,	b_mul,		b_x,
 			b_7,	b_8,	b_9,	b_div,		b_i,
-			b_dot,	b_0,	b_eq,
+			b_dot,	b_0,	b_eq,   			b_fac,	
+			b_sin,  b_cos,  b_tan,  b_lb,       b_rb,
+			b_abs, b_sqrt, b_log,	b_lm,       b_rm,
+			b_conj, b_der, b_pi,
 			b_expand,
 			]
 		}
