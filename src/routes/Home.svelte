@@ -144,7 +144,7 @@
 			padding: 10px; 
 			font-size: 28px;
 			background: transparent;
-			color: white;
+			color: black;
 			border: none;
 			border-radius: 5px;
 
@@ -160,7 +160,7 @@
 
 
 	h1, h2 {
-		color: white;
+		color: black;
 		margin: 20px;
 	}
 
