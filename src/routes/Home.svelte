@@ -1,5 +1,5 @@
 <script>
-	import {all, derivative, evaluate} from "mathjs"
+	import {derivative, evaluate} from 'mathjs'
 	
 	let is_expanded = false
 	let expr = ""
@@ -30,7 +30,7 @@
 		}
 	}
 
-	let b		= new Btn("",		() => {})
+	/* let b		= new Btn("",		() => {}) */
 	let b_1		= new Btn("1",		insert)
 	let b_2		= new Btn("2",		insert)
 	let b_3		= new Btn("3",		insert)
@@ -64,10 +64,10 @@
 	let b_log	= new Btn("log",	insert,	true)
 	let b_x		= new Btn("x",		insert,	true)
 	let b_i		= new Btn("i",		insert,	true)
-	let b_der	= new Btn("DER",	deriv,	true)
-	let b_conj  = new Btn("conj",  insert,  true)
-	let b_fac   = new Btn("!",  insert,  true)
-	let b_pi 	= new Btn("pi",  insert,  true)
+	let b_der	= new Btn("der",	deriv,	true)
+	let b_conj  = new Btn("conj",	insert, true)
+	let b_fac   = new Btn("!",		insert, true)
+	let b_pi 	= new Btn("pi",		insert, true)
 
 	let layouts = {
 		normal: {
