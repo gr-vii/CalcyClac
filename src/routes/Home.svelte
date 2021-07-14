@@ -4,10 +4,16 @@
 	let is_expanded = false
 	let expr = ""
 	let res = 0
+	let hist = []
+	let sel_hist = -1
 
 	function insert(seg) { expr += seg }
 
-	function calc() { res = evaluate(expr) }
+	function calc() {
+		res = evaluate(expr)
+		hist.push(expr)
+		sel_hist++
+	}
 
 	function deriv() { res = derivative(expr, 'x').toString() }
 
@@ -18,6 +24,13 @@
 	function toggle_expanded() {
 		is_expanded = !is_expanded
 		selected_layout = is_expanded ? layouts.expanded : layouts.normal
+	}
+
+	function history_scroll(n) {
+		n = parseInt(n, 10)
+		let i = sel_hist + n
+		if (i < 0 || i == hist.length) return
+		sel_hist += n
 	}
 
 	class Btn {
@@ -31,6 +44,8 @@
 	}
 
 	/* let b		= new Btn("",		() => {}) */
+	let b_hup	= new Btn("1",		history_scroll)
+	let b_hdown	= new Btn("-1",		history_scroll)
 	let b_1		= new Btn("1",		insert)
 	let b_2		= new Btn("2",		insert)
 	let b_3		= new Btn("3",		insert)
@@ -73,6 +88,7 @@
 		normal: {
 			sizes: {cols: 4, rows: 6},
 			grid: [
+			b_hup,	b_hdown,
 			b_ac,	b_del,	b_plus,
 			b_1,	b_2,	b_3,	b_sub,
 			b_4,	b_5,	b_6,	b_mul,
@@ -102,7 +118,8 @@
 
 <div class="container">
 	<div class ="calc">
-	<h2>{expr == "" ? ":D" : expr}</h2>
+		<h2>{sel_hist < 0 ? "history" : hist[sel_hist]}</h2>
+		<h2>{expr == "" ? "..." : expr}</h2>
 		<h1>{res}</h1>
 
 		<div
